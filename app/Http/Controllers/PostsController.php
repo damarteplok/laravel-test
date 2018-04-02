@@ -81,7 +81,7 @@ class PostsController extends Controller
         $this->validate($request, [
 
             'title' => 'required',
-            'featured' => 'required|image',
+            'featured' => 'required|image|mimes:jpg,jpeg,bmp,png|max:2000',
             'content' => 'required',
             'category_id' => 'required',
             'tags' => 'required'
@@ -119,7 +119,7 @@ class PostsController extends Controller
         $this->validate($request, [
 
             'title' => 'required',
-            'featured' => 'required|image',
+            'featured' => 'required|image|mimes:jpg,jpeg,bmp,png|max:2000',
             'content' => 'required',
             'category_id' => 'required',
             'tags' => 'required',
