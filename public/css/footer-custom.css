@@ -1,0 +1,33 @@
+footer{
+	color:white;
+}
+
+footer a{
+	color:#bfffff;
+}
+footer a:hover{
+	color: white;
+}
+
+.footer-bottom{
+	padding: 1em;
+	
+}
+
+.footer-top{
+  background: #3d6277;  
+}
+
+.footer-middle{
+  background: #3d6277;
+  padding-top: 2em;
+  padding-bottom: 2em;
+  color: #bfffff;
+}
+
+.footer-middle a{
+	color:#20B2AA;
+}
+.footer-middle a:hover{
+	color: #20B2AA;
+}
