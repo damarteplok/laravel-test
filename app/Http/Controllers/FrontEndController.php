@@ -27,13 +27,13 @@ class FrontEndController extends Controller
     	->with('second_post', Post::orderBy('created_at', 'desc')->skip(1)->take(4)->get())
     	->with('third_post', Post::orderBy('created_at', 'desc')->skip(2)->take(1)->get()->first())
     	->with('corousel_post', Post::all())
-        ->with('video1', Category::find(24))
-        ->with('news1', Category::find(20))
-        ->with('artist1', Category::find(21))
-    	->with('news', Category::find(20)->posts()->orderBy('created_at', 'desc')->take(6)->get())
-        ->with('video', Category::find(24)->posts()->orderBy('created_at', 'desc')->take(5)->get())
-    	->with('artist', Category::find(21)->posts()->orderBy('created_at', 'desc')->take(6)->get())
-    	->with('pakets', Category::find(23)->posts()->orderBy('created_at', 'desc')->take(3)->get())
+        ->with('video1', Category::find(5))
+        ->with('news1', Category::find(2))
+        ->with('artist1', Category::find(3))
+    	->with('news', Category::find(2)->posts()->orderBy('created_at', 'desc')->take(6)->get())
+        ->with('video', Category::find(5)->posts()->orderBy('created_at', 'desc')->take(5)->get())
+    	->with('artist', Category::find(3)->posts()->orderBy('created_at', 'desc')->take(6)->get())
+    	->with('pakets', Category::find(4)->posts()->orderBy('created_at', 'desc')->take(3)->get())
     	->with('settings', Setting::first());
     }
 
