@@ -1,2 +1,3 @@
 # laravel-test
-cms manual crud wysiwyg upload blog n booking sistem
+cms manual crud wysiwyg upload dinamis web blog n booking sistem
+fw laravel 5.6
