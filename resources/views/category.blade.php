@@ -17,7 +17,7 @@
             @if($category->posts()->count() > 0)
             @foreach($category->posts()->orderBy('created_at', 'desc')->paginate(30) as $post)
             <div class="col-6 mb-2 col-sm-6 mb-sm-2 col-md-4 mb-md-2 col-lg-2 d-flex align-items-stretch">
-              <div class="card ">
+              <div class="card d-flex flex-column justify-content-between ">
                     <a href="{{ route('post.single', ['slug' =>$post->slug]) }}">
                     <img class="card-img-top" src="{{ $post->featured }}" alt="{{ $post->title }}"></a>
                     
@@ -33,6 +33,7 @@
                     </div>
               </div>
             </div>
+            
             @endforeach
             @else
             <div class="col-12 col-lg-6 offset-lg-3 text-center">
