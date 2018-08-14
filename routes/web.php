@@ -546,6 +546,56 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 		'uses' => 'UploadController@uploadSubmit',
 		'as' => 'gallery'
 	] );
+
+	Route::get('/gallery/index',[
+		'uses' => 'UploadController@index', 
+		'as' => 'gallery.index2'
+	] );
+
+	Route::get('/gallery/edit/{id}',[
+
+		'uses' => 'UploadController@edit',
+		'as' => 'gallery.edit'
+
+	]);
+
+	Route::get('/gallery/delete/{id}',[
+
+		'uses' => 'UploadController@destroy',
+		'as' => 'gallery.delete'
+		
+	]);
+	Route::get('/gallery/edit2/{id}',[
+
+		'uses' => 'UploadController@edit2',
+		'as' => 'gallery.edit2'
+
+	]);
+
+	Route::get('/gallery/delete2/{id}',[
+
+		'uses' => 'UploadController@destroy2',
+		'as' => 'gallery.delete2'
+		
+	]);
+
+	Route::post('/gallery/update/{id}',[
+
+		'uses' => 'UploadController@update',
+		'as' => 'gallery.update'
+
+	]);
+
+	Route::get('/gallery/add/{id}',[
+		'uses' => 'UploadController@add', 
+		'as' => 'gallery.add'
+	] );
+
+	Route::post('/upload/photo', [
+		'uses' => 'UploadController@uploadSubmit2',
+		'as' => 'gallery.photo'
+	] );
+
 	
 
 });
@@ -554,9 +604,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 
   Route::prefix('customer')->group(function() {
     Route::get('/login/customer', 'Auth\CustomerLoginController@showLoginForm')->name('customer.login');
+    Route::get('/login/customers', 'Auth\CustomerLoginController@showLoginForm2')->name('customer.login2');
     Route::post('/login/customer', 'Auth\CustomerLoginController@login')->name('customer.login.submit');
+    Route::post('/login/customers', 'Auth\CustomerLoginController@login2')->name('customer.login.submit2');
+    // Route::get('/forgot/customer', 'Auth\CustomerLoginController@showForgotForm')->name('regis.request');
     Route::get('/customer/view', 'CustomersController@index1')->name('customer.dashboard');
     Route::get('/regis', 'BooksController@index1')->name('regis.customer');
+    Route::get('/regiss', 'BooksController@index12')->name('regis.customer2');
     Route::get('/customer/create', [
 
 		'uses' => 'CustomersController@index',
@@ -569,6 +623,27 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 		'as' => 'customer.store'
 			
 	]);
+
+	Route::post('/customers/store',[
+
+		'uses' => 'BooksController@store12',
+		'as' => 'customer.store2'
+			
+	]);
+
+	Route::post('/password/email','Auth\CustomerForgotPasswordController@sendResetLinkEmail')->name('customer.password.email');
+    Route::get('/password/reset','Auth\CustomerForgotPasswordController@showLinkRequestForm')->name('customer.password.request');
+    Route::post('/password/reset','Auth\CustomerResetPasswordController@reset');
+    Route::get('/password/reset/{token}','Auth\CustomerResetPasswordController@showResetForm')->name('customer.password.reset');
+
+
+    Route::post('/customer/update',[
+
+		'uses' => 'CustomersController@update2',
+		'as' => 'customer.profile.update'
+
+	]);
+
   });
 
 

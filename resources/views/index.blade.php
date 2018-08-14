@@ -2,19 +2,34 @@
 @section('content')
 
 
-<div class="body-wrap">  
+<div class="body-wrap"> 
+
+
+
   <div class="corosel my-5 pt-md-3">
+    @if(Session::has('success'))
+               
+      <div class="alert alert-success alert-dismissible fade show mt-2" role="alert" style="margin-bottom: 0px;">
+        {{ Session::get('success') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    
+    @endif
+    
     <div id="demo" class="carousel slide" data-ride="carousel">    
       
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <a href="{{ route('post.single', ['slug' =>$first_post->slug]) }}"><img id="tesimage" src="{{ $first_post->featured }}" alt="{{ $first_post->title }}"></a>
+          <a href="{{ route('post.single', ['slug' =>$first_post->slug]) }}"><img id="tesimage" src="{{ $first_post->featured }}" alt="{{ $first_post->title }}">
             <div class="carousel-caption d-flex mb-lg-5 h-75">
               <div class="row">
-                <div class="col col-sm-12 col-lg-8 align-self-lg-center " style="color: rgb(82,82,82);">
-                    <h1 class="text-lg-center">{{ $first_post->title }}</h1>
+                <div id="t-small" class="col col-sm-12 col-lg-8 align-self-lg-center" style="color: rgb(255,255,255);">
+                  
+                    <h1 class="text-lg-center"> {{ $first_post->title }}</h1>
                     {!! mb_substr($first_post->content,0,500) !!}<br>
-                    <p class="text-lg-center">{{ $first_post->created_at->toFormattedDateString() }}</p>
+                    <p class="text-lg-center ">{{ $first_post->created_at->toFormattedDateString() }}</p>
                   
                 </div>
                 <div class="col col-sm-12 col-lg-4 d-none d-lg-block align-self-lg-center">
@@ -29,18 +44,21 @@
               </div>
               
               
-            </div>   
+            </div>
+          </a>   
         </div>
         
         @foreach($second_post as $post)
           <div class="carousel-item">
-            <a href="{{ route('post.single', ['slug' =>$post->slug]) }}"><img id="tesimage" src="{{ $post->featured }}" alt="{{ $post->title }}" ></a>
+            <a href="{{ route('post.single', ['slug' =>$post->slug]) }}"><img id="tesimage" src="{{ $post->featured }}" alt="{{ $post->title }}" >
             
 
             <div class="carousel-caption d-flex mb-lg-5 h-75">
               <div class="row">
-                <div class="col col-sm-12 col-lg-8 align-self-lg-center " style="color: rgb(82,82,82);">
+                <div id="t-small" class="col col-sm-12 col-lg-8 align-self-lg-center" style="color: rgb(255,255,255);">
+                
                     <h1 class="text-lg-center">{{ $post->title }}</h1>
+                  
                     {!! mb_substr($post->content,0,500) !!}<br>
                     <p class="text-lg-center">{{ $post->created_at->toFormattedDateString() }}</p>
                   
@@ -57,7 +75,9 @@
               </div>
               
               
-            </div>       
+            </div>
+            </a>
+
           </div>
         @endforeach 
       </div>
@@ -65,10 +85,11 @@
       <a class="carousel-control-prev" href="#demo" data-slide="prev">
         <span class="carousel-control-prev-icon"></span>
       </a>
+
       <a class="carousel-control-next" href="#demo" data-slide="next">
         <span class="carousel-control-next-icon"></span>
-      
       </a>
+
     </div>
   </div>
 
@@ -91,7 +112,7 @@
             <div class="title-head">
                 <h1>Lastest <a href="{{ route('category.single', ['id' =>$news1->id]) }}">{{ $news1->name }}</a></h1>
             </div>
-            <div class="ml-auto align-self-center">
+            <div class="ml-auto align-self-center ">
               <a href="{{ route('category.single', ['id' =>$news1->id]) }}" class="btn btn-primary btn-sm active" role="button" aria-disabled="true">Read more</a>
             </div>
         </div>
@@ -103,7 +124,7 @@
           <div class="row">
             @foreach($news as $post)
             <div class="col-6 mb-2 col-sm-6 mb-sm-2 col-md-4 mb-md-2 col-lg-2 d-flex align-items-stretch">
-              <div class="card ">
+              <div class="card d-flex flex-column justify-content-between">
                     <a href="{{ route('post.single', ['slug' =>$post->slug]) }}">
                     <img class="card-img-top" src="{{ $post->featured }}" alt="{{ $post->title }}"></a>
                     
@@ -141,7 +162,7 @@
           <div class="row">
             @foreach($artist as $post)
             <div class="col-6 mb-2 col-sm-6 mb-sm-2 col-md-4 mb-md-2 col-lg-2 d-flex align-items-stretch">
-              <div class="card ">
+              <div class="card d-flex flex-column justify-content-between ">
                     <a href="{{ route('post.single', ['slug' =>$post->slug]) }}">
                     <img class="card-img-top" src="{{ $post->featured }}" alt="{{ $post->title }}"></a>
                     
@@ -182,7 +203,7 @@
             <div class="row">
             @foreach($video as $post)
             <div class="col-6 mb-2 col-sm-6 mb-sm-2 col-md-4 mb-md-2 col-lg-2 d-flex  align-items-stretch">
-              <div class="card ">
+              <div class="card d-flex flex-column justify-content-between ">
                     <a href="{{ route('post.single', ['slug' =>$post->slug]) }}">
                     <img class="card-img-top" src="{{ $post->featured }}" alt="{{ $post->title }}"></a>
                     
@@ -199,6 +220,51 @@
               </div>
             </div>
             @endforeach
+          </div>
+
+        </div>
+</div>
+
+<div class="container-fluid">
+        <div class="container d-flex mt-5 mb-3">
+            <div class="title-head">
+                <h1>Lastest Add: <a href="{{ route('category.single', ['id' =>$a1->id]) }}">{{ $a1->name }}</a></h1>
+            </div>
+            <div class="ml-auto align-self-center">
+              <a href="{{ route('category.single', ['id' =>$a1->id]) }}" class="btn btn-primary btn-sm active" role="button" aria-disabled="true">Read more</a>
+            </div>
+        </div>
+</div>
+
+<div class="container-fluid">
+        <div class="tes-tes container mb-5 py-5">
+            <div class="row">
+            @if($a->count() > 0)
+            @foreach($a as $post)
+            <div class="col-6 mb-2 col-sm-6 mb-sm-2 col-md-4 mb-md-2 col-lg-2 d-flex  align-items-stretch">
+              <div class="card d-flex flex-column justify-content-between ">
+                    <a href="{{ route('post.single', ['slug' =>$post->slug]) }}">
+                    <img class="card-img-top" src="{{ $post->featured }}" alt="{{ $post->title }}"></a>
+                    
+                    
+                    <div class="footer-card  card-footer text-muted">
+                      <div class="mb-1">
+                        <a href="{{ route('post.single', ['slug' =>$post->slug]) }}"><p class="card-text">{{ $post->title }}</p></a>
+                      </div>
+                      <div class="mb-0">
+                      
+                      <p>{{ $post->created_at->toFormattedDateString() }}</p>
+                      </div>
+                    </div>
+              </div>
+            </div>
+            @endforeach
+            @else
+            <h3>No Post yet</h3>
+              
+            
+            
+            @endif
           </div>
 
         </div>
@@ -225,7 +291,7 @@
 
   #tesimage {
   width: 100%;
-  height: 570px;  
+  height: 35.625rem;  
   -webkit-filter: blur(5px);
   -moz-filter: blur(5px);
   -o-filter: blur(5px);
@@ -236,25 +302,22 @@
 
   .paket img {
       width: 100%;
-      height: 144.3px;
+      height: 9.07rem;
   }
 
-  /*.carousel-inner {
-    color:rgb(82,82,82);
-  }*/
 
   .footer-card {
 
     color: #212121;
     display: block;
-    font-size: 16px;
-    line-height: 18px;
-   /* max-height: 36px;
-    min-height: 18px;*/
+    font-size: 1rem;
+    line-height: 1rem;
 
   }
 
-  /*div { overflow-y: hidden; margin-bottom: 10px; background: cyan; width:200px; }*/
+
+
+    
   
   </style>
 

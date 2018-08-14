@@ -60,7 +60,7 @@ class HomeController extends Controller
         }
         $now = Carbon::now();
 
-        $bookmonth = Booklist::whereMonth('created_at', '=', $now->month)->get();
+        $bookmonth = Booklist::whereMonth('date', '=', $now->month)->get();
         $sum1 =0;
         foreach ($bookmonth as $key) {
             # code...

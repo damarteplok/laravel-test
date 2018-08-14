@@ -21,7 +21,7 @@
 							<div class="form-group">
 								  <label for="example-date-input">Tanggal Booking</label>
 								  
-								    <input class="form-control" type="date" id="example-date-input" placeholder="Masukan Tanggal Booking" name="date">
+								    <input class="form-control" type="text" value="{{ $tglGlobal }}" id="example-date-input" placeholder="Masukan Tanggal Booking" name="date" onkeypress="return false;">
 								 
 							</div>
 

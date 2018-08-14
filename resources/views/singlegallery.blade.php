@@ -19,7 +19,7 @@
             {{-- {{ dd($post->filename) }} --}}
             @foreach($photos as $key)
             <div class="col-6 mb-2 col-sm-6 mb-sm-2 col-md-3 mb-md-2 col-lg-4 mb-lg-2 d-flex align-items-stretch">
-              <div class="card ">
+              <div class="card d-flex flex-column justify-content-between ">
                     
                     <img class="card-img-top" src="{{ asset($key->filename)}}" alt="{{ $key->filename }}"></a>
                     {{-- <div class="card-footer">

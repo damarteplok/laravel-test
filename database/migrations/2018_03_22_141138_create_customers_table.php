@@ -20,6 +20,7 @@ class CreateCustomersTable extends Migration
             $table->string('nohp')->nullable();
             $table->string('email');
             $table->timestamps();
+            $table->rememberToken();
         });
     }
 

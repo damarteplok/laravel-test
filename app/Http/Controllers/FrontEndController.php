@@ -12,29 +12,68 @@ use App\Booklist;
 use App\Gallery;
 use App\GalleryPhoto;
 use Session;
+use Redirect;
+use Auth;
+use App\Customer;
+
 
 class FrontEndController extends Controller
 {
     //
     //$a = Post::orderBy('created_at', 'desc')->take(3)->get()->first();
+
+     
     
     public function index()
     {
-    	return view('index')
-    	->with('title', Setting::first()->site_name)
-    	->with('categories', Category::take(3)->get())
-    	->with('first_post', Post::orderBy('created_at', 'desc')->first())
-    	->with('second_post', Post::orderBy('created_at', 'desc')->skip(1)->take(4)->get())
-    	->with('third_post', Post::orderBy('created_at', 'desc')->skip(2)->take(1)->get()->first())
-    	->with('corousel_post', Post::all())
-        ->with('video1', Category::find(24))
-        ->with('news1', Category::find(20))
-        ->with('artist1', Category::find(21))
-    	->with('news', Category::find(20)->posts()->orderBy('created_at', 'desc')->take(6)->get())
-        ->with('video', Category::find(24)->posts()->orderBy('created_at', 'desc')->take(5)->get())
-    	->with('artist', Category::find(21)->posts()->orderBy('created_at', 'desc')->take(6)->get())
-    	->with('pakets', Category::find(23)->posts()->orderBy('created_at', 'desc')->take(3)->get())
-    	->with('settings', Setting::first());
+        if(Auth::guard('customer')->check())
+            {
+
+                $id = Auth::guard('customer')->id();
+                $abc = Customer::find($id);
+                //dd($abc);
+                $last = Category::orderBy('created_at', 'desc')->first();
+                return view('index')
+                ->with('title', Setting::first()->site_name)
+                ->with('categories', Category::take(3)->get())
+                ->with('first_post', Post::orderBy('created_at', 'desc')->first())
+                ->with('second_post', Post::orderBy('created_at', 'desc')->skip(1)->take(4)->get())
+                ->with('third_post', Post::orderBy('created_at', 'desc')->skip(2)->take(1)->get()->first())
+                ->with('corousel_post', Post::all())
+                ->with('video1', Category::find(4))
+                ->with('news1', Category::find(2))
+                ->with('artist1', Category::find(3))
+                ->with('a1', $last)
+                ->with('member', $abc)
+                ->with('news', Category::find(2)->posts()->orderBy('created_at', 'desc')->take(6)->get())
+                ->with('video', Category::find(4)->posts()->orderBy('created_at', 'desc')->take(6)->get())
+                ->with('artist', Category::find(3)->posts()->orderBy('created_at', 'desc')->take(6)->get())
+                ->with('a', $last->posts()->orderBy('created_at', 'desc')->take(6)->get())
+                ->with('pakets', Category::find(5)->posts()->orderBy('created_at', 'desc')->take(3)->get())
+                ->with('settings', Setting::first());
+
+            } else {
+                $last = Category::orderBy('created_at', 'desc')->first();
+                return view('index')
+                ->with('title', Setting::first()->site_name)
+                ->with('categories', Category::take(3)->get())
+                ->with('first_post', Post::orderBy('created_at', 'desc')->first())
+                ->with('second_post', Post::orderBy('created_at', 'desc')->skip(1)->take(4)->get())
+                ->with('third_post', Post::orderBy('created_at', 'desc')->skip(2)->take(1)->get()->first())
+                ->with('corousel_post', Post::all())
+                ->with('video1', Category::find(4))
+                ->with('news1', Category::find(2))
+                ->with('artist1', Category::find(3))
+                ->with('a1', $last)
+                ->with('news', Category::find(2)->posts()->orderBy('created_at', 'desc')->take(6)->get())
+                ->with('video', Category::find(4)->posts()->orderBy('created_at', 'desc')->take(6)->get())
+                ->with('artist', Category::find(3)->posts()->orderBy('created_at', 'desc')->take(6)->get())
+                ->with('a', $last->posts()->orderBy('created_at', 'desc')->take(6)->get())
+                ->with('pakets', Category::find(5)->posts()->orderBy('created_at', 'desc')->take(3)->get())
+                ->with('settings', Setting::first());
+
+            }
+        
     }
 
     public function singlePost($slug)
@@ -140,6 +179,9 @@ class FrontEndController extends Controller
 
         $result = Booklist::where('date',$request->book )->first();
         $tgl = $request->book;
+        $tglGlobal = $tgl;
+        Session::put('tglGlobal', $tgl);
+        // Redirect::to('customer/customer/view')->with($tglGlobal);
         
 
         return view('cartgl2')

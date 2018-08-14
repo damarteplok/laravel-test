@@ -147,9 +147,12 @@
                       <a data-toggle="collapse" href="#formsExamples61" aria-expanded="true" class="">Gallery</a>
                       <div class="collapse in" id="formsExamples61" aria-expanded="true" style="">
                           <ul >
+                            
+                            <li><a href="{{ route('gallery.index2') }}">Gallery</a>
+                            </li>
+
                             <li><a href="{{ route('gallery') }}">Create Gallery</a>
                             </li>
-                            
                                                                                            
                           </ul>
                       </div>

@@ -5,7 +5,7 @@
 @include('admin.include.error')
 
 <div class="card">
-    <div class="card-header">Createa a new Gallert</div>
+    <div class="card-header">Createa a new Gallery</div>
     <div class="card-body">
         <form action="{{ route('gallery') }}" method="post" enctype="multipart/form-data">
             {{ csrf_field() }}

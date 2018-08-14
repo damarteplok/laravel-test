@@ -32,15 +32,21 @@
 			</div>
 
 
+			
+
 			<div class="form-group">
 
 				<label for="tags">Select tags</label>
+				<div class="d-flex flex-wrap">
+ 
+
 				@foreach($tags as $tag)
-					<div class="custom-checkbox">
+					<div class="custom-checkbox m-1">
 						<label><input type="checkbox" value="{{ $tag->id }}" name="tags[]">{{ $tag->tag }}</label>
 					</div>
 
 				@endforeach
+				</div>
 				
 			</div>
 

@@ -25,7 +25,7 @@
 
               <div class="card border-success mb-3">
                 <div class="card-header text-center">
-                    USERS 
+                    MEMBER
                 </div>
                 <div class="card-body">
                   

@@ -27,8 +27,8 @@ class UsersTableSeeder extends Seeder
             'user_id' => $user->id,
             'avatar' => '/uploads/avatars/xiyeon.jpg',
             'about' => 'sauhduashdsauidhsaiudhsaiudh',
-            'facebook' => 'facebook.com',
-            'youtube' => 'youtube.com'
+            'facebook' => 'https://facebook.com',
+            'youtube' => 'https://youtube.com'
 
         ]);   
     }

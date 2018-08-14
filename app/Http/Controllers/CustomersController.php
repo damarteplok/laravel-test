@@ -7,6 +7,8 @@ use App\Customer;
 use App\Product;
 use Session;
 
+use Auth;
+
 class CustomersController extends Controller
 {
     /**
@@ -32,7 +34,12 @@ class CustomersController extends Controller
 
     public function index1()
     {
+        // $tglGlobal = (Session::has('tglGlobal')) ? Session::get('tglGlobal') : [];
+        $tglGlobal = Session::get('tglGlobal');
+        
+        
         return view('client.createtrans')
+        ->with('tglGlobal', $tglGlobal)
         ->with('products', Product::all())
         ->with('customer', Customer::first());
     }
@@ -115,6 +122,46 @@ class CustomersController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function update2(Request $request)
+    {
+        //
+        $this->validate($request,[
+
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+            'nohp' => 'required',
+            'alamat' => 'required'
+
+        ]);
+
+        $member = Customer::find($request->id);
+
+        
+
+
+        $member->name = $request->name;
+        $member->email = $request->email;
+        $member->nohp = $request->nohp;
+        $member->alamat = $request->alamat;
+
+        
+        
+
+        if($request->has('password'))
+        {
+
+            $member->password = bcrypt($request->password);
+
+        }
+
+        $member->save();
+
+        Session::flash('success','member profile updated');
+
+        return redirect()->route('index');
     }
 
     /**

@@ -64,22 +64,31 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    {{-- <a class="dropdown-item" href="/password/reset">Change Password</a> --}}
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalCenter">Settings</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                          @csrf
+                                        </form>
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
+                                    
                                 </div>
                             </li>
-                          
+                        @else
+                          <li class="nav-item">
+                            <a class="nav-link" href="{{ route('customer.login2') }}">Member</a>
+                          </li>
                         @endif
                       
                     </ul>
-                </div>
+    </div>
+
+
   </div>
   </div>
 </nav>

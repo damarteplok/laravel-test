@@ -21,11 +21,16 @@
 
 							    <label for="tes">Cari ketersediaan</label>
 							    <div class="form-group row">
-								  <label for="example-date-input" class="col-2 col-form-label">Date</label>
-								  <div class="col-12">
-								    <input class="form-control" type="date" id="example-date-input" placeholder="Masukan Tanggal" name="book">
-								  </div>
+								  
+								<div class="col-12 " id="datetimepicker"></div>
+								
+								<input class="form-control m-3" type="text" id="d" placeholder="Masukan Tanggal" name="book" onkeypress="return false;">
+							
+
 								</div>
+
+								
+
 								<div class="text-center">
 									<button class="btn btn-success" type="submit">Search</button>
 								</div>
@@ -42,6 +47,8 @@
 	</div>
 </div>
 
+
+
 	
 
  
@@ -52,10 +59,27 @@
 
 @stop
 
-@section('custom')
+@section('script')
 
 
+<script type="text/javascript">
 
+	
+$(function () {
+
+                 $('#datetimepicker').datepicker({
+                 dateFormat: 'yy-mm-dd',
+                 inline: true,
+			     altField: '#d',  
+                 minDate:+1
+                 
+                 });
+
+                 $('#d').change(function(){
+				    $('#datetimepicker').datepicker('setDate', $(this).val());
+				});
+           });
+</script>
 
 @stop
 

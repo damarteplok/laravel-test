@@ -24,6 +24,12 @@ class BooksController extends Controller
         return view('client.createcus');
     }
 
+    public function index12()
+    {
+        //
+        return view('client.createcus2');
+    }
+
     public function index()
     {
         //
@@ -186,7 +192,7 @@ class BooksController extends Controller
         });
 
 
-        Session::flash('success', 'Post created succesfully');
+        Session::flash('success','Terimakasih telah melakukan booking di website kami, silahkan cek email anda');
 
 
         return redirect()->route('index');
@@ -311,6 +317,36 @@ class BooksController extends Controller
         Session::flash('success', 'created succesfully');
 
         return redirect()->route('books');
+    }
+
+    public function store12(Request $request)
+    {
+        //
+        $this->validate($request, [
+
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:customers,email',
+            'nohp' => 'required|max:18',
+            'alamat' => 'required|max:255',
+            'password' => 'required|confirmed|min:6'
+            
+
+        ]);
+
+
+        $customer = new Customer;
+        $customer->name = $request->name;
+        $customer->email = $request->email;
+        $customer->nohp = $request->nohp;
+        $customer->alamat = $request->alamat;
+        $customer->password = bcrypt($request->password);
+        $customer->save();
+
+        
+
+        Session::flash('success', 'created succesfully');
+
+        return redirect()->route('customer.login2');
     }
 
     public function history($id)

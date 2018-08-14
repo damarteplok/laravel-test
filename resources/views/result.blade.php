@@ -21,7 +21,7 @@
            @if($posts->count() > 0)
             @foreach($posts->sortByDesc('created_at') as $post)
             <div class="col-6 mb-2 col-sm-6 mb-sm-2 col-md-4 mb-md-2 col-lg-2 d-flex align-items-stretch">
-              <div class="card ">
+              <div class="card d-flex flex-column justify-content-between ">
                     <a href="{{ route('post.single', ['slug' =>$post->slug]) }}">
                     <img class="card-img-top" src="{{ $post->featured }}" alt="{{ $post->title }}"></a>
                     
