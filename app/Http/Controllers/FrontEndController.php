@@ -26,7 +26,7 @@ class FrontEndController extends Controller
     
     public function index()
     {
-<<<<<<< HEAD
+// <<<<<<< HEAD
         if(Auth::guard('customer')->check())
             {
 
@@ -75,7 +75,7 @@ class FrontEndController extends Controller
 
             }
         
-=======
+// =======
     	return view('index')
     	->with('title', Setting::first()->site_name)
     	->with('categories', Category::take(3)->get())
@@ -91,7 +91,7 @@ class FrontEndController extends Controller
     	->with('artist', Category::find(3)->posts()->orderBy('created_at', 'desc')->take(6)->get())
     	->with('pakets', Category::find(4)->posts()->orderBy('created_at', 'desc')->take(3)->get())
     	->with('settings', Setting::first());
->>>>>>> cd74dffcd4a31b9f15dbd2df182be772015b4023
+// >>>>>>> cd74dffcd4a31b9f15dbd2df182be772015b4023
     }
 
     public function singlePost($slug)

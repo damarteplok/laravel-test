@@ -4,11 +4,11 @@
 
 <div class="body-wrap"> 
 
-<<<<<<< HEAD
+{{-- <<<<<<< HEAD
 
 
 =======
->>>>>>> cd74dffcd4a31b9f15dbd2df182be772015b4023
+>>>>>>> cd74dffcd4a31b9f15dbd2df182be772015b4023 --}}
   <div class="corosel my-5 pt-md-3">
     @if(Session::has('success'))
                
@@ -28,14 +28,14 @@
           <a href="{{ route('post.single', ['slug' =>$first_post->slug]) }}"><img id="tesimage" src="{{ $first_post->featured }}" alt="{{ $first_post->title }}">
             <div class="carousel-caption d-flex mb-lg-5 h-75">
               <div class="row">
-<<<<<<< HEAD
+{{-- <<<<<<< HEAD --}}
                 <div id="t-small" class="col col-sm-12 col-lg-8 align-self-lg-center" style="color: rgb(255,255,255);">
                   
                     <h1 class="text-lg-center"> {{ $first_post->title }}</h1>
-=======
-                <div id="t-small" class="col col-sm-12 col-lg-8 align-self-lg-center" style="color: rgb(82,82,82);">
-                    <h1 class="text-lg-center">{{ $first_post->title }}</h1>
->>>>>>> cd74dffcd4a31b9f15dbd2df182be772015b4023
+{{-- ======= --}}
+                {{-- <div id="t-small" class="col col-sm-12 col-lg-8 align-self-lg-center" style="color: rgb(82,82,82);">
+                    <h1 class="text-lg-center">{{ $first_post->title }}</h1> --}}
+{{-- >>>>>>> cd74dffcd4a31b9f15dbd2df182be772015b4023 --}}
                     {!! mb_substr($first_post->content,0,500) !!}<br>
                     <p class="text-lg-center ">{{ $first_post->created_at->toFormattedDateString() }}</p>
                   
@@ -63,12 +63,12 @@
 
             <div class="carousel-caption d-flex mb-lg-5 h-75">
               <div class="row">
-<<<<<<< HEAD
+{{-- <<<<<<< HEAD --}}
                 <div id="t-small" class="col col-sm-12 col-lg-8 align-self-lg-center" style="color: rgb(255,255,255);">
                 
-=======
-                <div id="t-small" class="col col-sm-12 col-lg-8 align-self-lg-center" style="color: rgb(82,82,82);">
->>>>>>> cd74dffcd4a31b9f15dbd2df182be772015b4023
+{{-- ======= --}}
+               {{--  <div id="t-small" class="col col-sm-12 col-lg-8 align-self-lg-center" style="color: rgb(82,82,82);"> --}}
+{{-- >>>>>>> cd74dffcd4a31b9f15dbd2df182be772015b4023 --}}
                     <h1 class="text-lg-center">{{ $post->title }}</h1>
                   
                     {!! mb_substr($post->content,0,500) !!}<br>
