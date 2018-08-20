@@ -32,7 +32,7 @@ class FrontEndController extends Controller
 
                 $id = Auth::guard('customer')->id();
                 $abc = Customer::find($id);
-                //dd($abc);
+                // dd($id);
                 $last = Category::orderBy('created_at', 'desc')->first();
                 return view('index')
                 ->with('title', Setting::first()->site_name)
@@ -76,76 +76,151 @@ class FrontEndController extends Controller
             }
         
 // =======
-    	return view('index')
-    	->with('title', Setting::first()->site_name)
-    	->with('categories', Category::take(3)->get())
-    	->with('first_post', Post::orderBy('created_at', 'desc')->first())
-    	->with('second_post', Post::orderBy('created_at', 'desc')->skip(1)->take(4)->get())
-    	->with('third_post', Post::orderBy('created_at', 'desc')->skip(2)->take(1)->get()->first())
-    	->with('corousel_post', Post::all())
-        ->with('video1', Category::find(5))
-        ->with('news1', Category::find(2))
-        ->with('artist1', Category::find(3))
-    	->with('news', Category::find(2)->posts()->orderBy('created_at', 'desc')->take(6)->get())
-        ->with('video', Category::find(5)->posts()->orderBy('created_at', 'desc')->take(5)->get())
-    	->with('artist', Category::find(3)->posts()->orderBy('created_at', 'desc')->take(6)->get())
-    	->with('pakets', Category::find(4)->posts()->orderBy('created_at', 'desc')->take(3)->get())
-    	->with('settings', Setting::first());
+    	// return view('index')
+    	// ->with('title', Setting::first()->site_name)
+    	// ->with('categories', Category::take(3)->get())
+    	// ->with('first_post', Post::orderBy('created_at', 'desc')->first())
+    	// ->with('second_post', Post::orderBy('created_at', 'desc')->skip(1)->take(4)->get())
+    	// ->with('third_post', Post::orderBy('created_at', 'desc')->skip(2)->take(1)->get()->first())
+    	// ->with('corousel_post', Post::all())
+     //    ->with('video1', Category::find(5))
+     //    ->with('news1', Category::find(2))
+     //    ->with('artist1', Category::find(3))
+    	// ->with('news', Category::find(2)->posts()->orderBy('created_at', 'desc')->take(6)->get())
+     //    ->with('video', Category::find(5)->posts()->orderBy('created_at', 'desc')->take(5)->get())
+    	// ->with('artist', Category::find(3)->posts()->orderBy('created_at', 'desc')->take(6)->get())
+    	// ->with('pakets', Category::find(4)->posts()->orderBy('created_at', 'desc')->take(3)->get())
+    	// ->with('settings', Setting::first());
 // >>>>>>> cd74dffcd4a31b9f15dbd2df182be772015b4023
     }
 
     public function singlePost($slug)
     {
+         if(Auth::guard('customer')->check())
+        {
+            $id = Auth::guard('customer')->id();
+            $abc = Customer::find($id);
+            $post = Post::where('slug', $slug)->first();
+            $recents =  $post->category_id;
+            $recents = Category::find($recents)->posts()->orderBy('created_at', 'desc')->take(3)->get(); 
 
-    	$post = Post::where('slug', $slug)->first();
-        $recents =  $post->category_id;
-        $recents = Category::find($recents)->posts()->orderBy('created_at', 'desc')->take(3)->get(); 
+            $next_id = Post::where('id', '>', $post->id )->min('id');
+            $prev_id = Post::where('id', '<', $post->id)->max('id');  
 
-        $next_id = Post::where('id', '>', $post->id )->min('id');
-        $prev_id = Post::where('id', '<', $post->id)->max('id');  
+            return view('singles')->with('post', $post)
+            ->with('title', $post->title)
+            ->with('categories', Category::take(3)->get())
+            ->with('settings', Setting::first())
+            ->with('next', Post::find($next_id))
+            ->with('prev', Post::find($prev_id))
+            ->with('tags', Tag::all())
+            ->with('recents', $recents)
+            ->with('member', $abc);
 
-    	return view('singles')->with('post', $post)
-    	->with('title', $post->title)
-    	->with('categories', Category::take(3)->get())
-    	->with('settings', Setting::first())
-        ->with('next', Post::find($next_id))
-        ->with('prev', Post::find($prev_id))
-        ->with('tags', Tag::all())
-        ->with('recents', $recents);
+            }
+
+        else
+        {
+            $post = Post::where('slug', $slug)->first();
+            $recents =  $post->category_id;
+            $recents = Category::find($recents)->posts()->orderBy('created_at', 'desc')->take(3)->get(); 
+
+            $next_id = Post::where('id', '>', $post->id )->min('id');
+            $prev_id = Post::where('id', '<', $post->id)->max('id');  
+
+            return view('singles')->with('post', $post)
+            ->with('title', $post->title)
+            ->with('categories', Category::take(3)->get())
+            ->with('settings', Setting::first())
+            ->with('next', Post::find($next_id))
+            ->with('prev', Post::find($prev_id))
+            ->with('tags', Tag::all())
+            ->with('recents', $recents);
+        }
+
+    	
 
     }
 
     public function category($id)
     {
 
-        $category = Category::find($id);
+        if(Auth::guard('customer')->check())
+            {
+                $id2 = Auth::guard('customer')->id();
+                $abc = Customer::find($id2);
+                $category = Category::find($id);
         //dd($category);
         //$category = Category::where('id', '=', $id)->paginate(3);
 
-        return view('category')->with('category', $category)
-        ->with('title', $category->name)
-        ->with('categories', Category::take(3)->get())
-        ->with('settings', Setting::first());
+                return view('category')->with('category', $category)
+                ->with('title', $category->name)
+                ->with('categories', Category::take(3)->get())
+                ->with('settings', Setting::first())
+                ->with('member', $abc);        
+            }
+            else {
+                $category = Category::find($id);
+                //dd($category);
+                //$category = Category::where('id', '=', $id)->paginate(3);
 
+                return view('category')->with('category', $category)
+                ->with('title', $category->name)
+                ->with('categories', Category::take(3)->get())
+                ->with('settings', Setting::first());
+            }
     }
 
     public function gallery()
     {
+        if(Auth::guard('customer')->check())
+            {
+                $id = Auth::guard('customer')->id();
+                $abc = Customer::find($id);
+                $gallery = Gallery::all();
+                //dd($category);
+                //$category = Category::where('id', '=', $id)->paginate(3);
 
-        $gallery = Gallery::all();
-        //dd($category);
-        //$category = Category::where('id', '=', $id)->paginate(3);
+                return view('gallery')->with('gallery', $gallery)
+                ->with('title', 'Gallery')
+                ->with('categories', Category::take(3)->get())
+                ->with('settings', Setting::first())
+                ->with('member', $abc);        
+            }
+            else 
+            {
+            $gallery = Gallery::all();
+            //dd($category);
+            //$category = Category::where('id', '=', $id)->paginate(3);
 
-        return view('gallery')->with('gallery', $gallery)
-        ->with('title', 'Gallery')
-        ->with('categories', Category::take(3)->get())
-        ->with('settings', Setting::first());
-
+            return view('gallery')->with('gallery', $gallery)
+            ->with('title', 'Gallery')
+            ->with('categories', Category::take(3)->get())
+            ->with('settings', Setting::first());
+            }
     }
 
     public function gallerySingle($id)
     {
+        if(Auth::guard('customer')->check())
+            {
+                $id2 = Auth::guard('customer')->id();
+                $abc = Customer::find($id2);
+                $gallery = Gallery::find($id);
+                $photos = $gallery->galleryphotos()->get();
 
+                //dd($photos);
+                //$category = Category::where('id', '=', $id)->paginate(3);
+
+                return view('singlegallery')->with('gallery', $gallery)
+                ->with('photos', $photos)
+                ->with('title', 'Gallery ' . $gallery->name)
+                ->with('categories', Category::take(3)->get())
+                ->with('settings', Setting::first())
+                ->with('member', $abc);
+            }
+
+            else {
         $gallery = Gallery::find($id);
         $photos = $gallery->galleryphotos()->get();
 
@@ -157,30 +232,58 @@ class FrontEndController extends Controller
         ->with('title', 'Gallery ' . $gallery->name)
         ->with('categories', Category::take(3)->get())
         ->with('settings', Setting::first());
+        }
 
     }
 
     public function tag($id)
     {
 
+        if(Auth::guard('customer')->check())
+            {
+                $id2 = Auth::guard('customer')->id();
+                $abc = Customer::find($id2);
+                $tag = Tag::find($id);
+
+        return view('tag')->with('tag', $tag)
+        ->with('title', $tag->tag)
+        ->with('categories', Category::take(3)->get())
+        ->with('settings', Setting::first())
+        ->with('member', $abc);
+            }
+            else {
         $tag = Tag::find($id);
 
         return view('tag')->with('tag', $tag)
         ->with('title', $tag->tag)
         ->with('categories', Category::take(3)->get())
         ->with('settings', Setting::first());
+        }
 
     }
 
     public function caritgl()
     {
 
-        
+        if(Auth::guard('customer')->check())
+       {
+        $id = Auth::guard('customer')->id();
+                $abc = Customer::find($id);
+        return view('caritgl')
+        ->with('categories', Category::take(3)->get())
+        ->with('settings', Setting::first())
+        ->with('title', 'Search Available Date')
+        ->with('member', $abc);
+       }
+
+       else
+       {
 
         return view('caritgl')
         ->with('categories', Category::take(3)->get())
         ->with('settings', Setting::first())
         ->with('title', 'Search Available Date');
+        }
 
     }
 
@@ -194,8 +297,28 @@ class FrontEndController extends Controller
             
 
         ]);
+        if(Auth::guard('customer')->check())
+       {
+        $id = Auth::guard('customer')->id();
+                $abc = Customer::find($id);
 
         $result = Booklist::where('date',$request->book )->first();
+        $tgl = $request->book;
+        $tglGlobal = $tgl;
+        Session::put('tglGlobal', $tgl);
+        // Redirect::to('customer/customer/view')->with($tglGlobal);
+        
+
+        return view('cartgl2')
+        ->with('categories', Category::take(3)->get())
+        ->with('member', $abc)
+        ->with('settings', Setting::first())
+        ->with('title', 'Search Available Date')
+        ->with('result', $result)
+        ->with('tgl', $tgl);
+        }
+        else {
+            $result = Booklist::where('date',$request->book )->first();
         $tgl = $request->book;
         $tglGlobal = $tgl;
         Session::put('tglGlobal', $tgl);
@@ -208,6 +331,7 @@ class FrontEndController extends Controller
         ->with('title', 'Search Available Date')
         ->with('result', $result)
         ->with('tgl', $tgl);
+        }
 
     }
    
